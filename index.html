@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Calculate Remainder of Divison!</title>
+    <style>
+    h1 {
+        color: #FFFFFF;
+        font-family: system-ui;
+		margin-left: 20px;
+        }
+	body {
+        background-color: #222629;
+        }
+    label {
+        color: #86C232;
+        font-family: system-ui;
+        font-size: 20px;
+        margin-left: 20px;
+		margin-top: 20px;
+        }
+     button {
+        background-color: #86C232;
+		border-color: #86C232;
+		color: #FFFFFF;
+        font-family: system-ui;
+        font-size: 20px;
+		font-weight: bold;
+        margin-left: 30px;
+		margin-top: 20px;
+		width: 140px;
+        }
+	 input {
+        color: #222629;
+        font-family: system-ui;
+        font-size: 20px;
+        margin-left: 10px;
+		margin-top: 20px;
+		width: 100px;
+        }
+    </style>
+    <script>
+        // callDivisonRemainderAPI function that takes the numerator and denominator numbers as parameters
+        var callDivisonRemainderAPI = (numerator,denominator)=>{
+            // instantiate a headers object
+            var headers = new Headers();
+            // add content type header to object
+            headers.append("Content-Type", "application/json");
+            // using built in JSON utility package turn object to string and store in a variable
+            var rawValues = JSON.stringify({"numerator":numerator,"denominator":denominator});
+            // create a JSON object with parameters for API call and store in a variable
+            var requestOptions = {
+                method: 'POST',
+                headers: headers,
+                body: rawValues,
+                redirect: 'follow'
+            };
+			var url = new URL("<URL>");
+			
+			url.searchParams.append('numerator', numerator);
+			url.searchParams.append('denominator', denominator);
+			
+            // make API call with parameters and use promises to get response
+            fetch(url, requestOptions)
+            .then(response => response.text())
+            .then(result => alert(JSON.parse(result).body))
+            .catch(error => console.log('error', error));
+        }
+    </script>
+</head>
+<body>
+    <h1>Remainder of Divison</h1>
+	<form>
+        <label>Numerator:</label>
+        <input type="text" id="numerator">
+        <label>Denominator:</label>
+        <input type="text" id="denominator">
+        <!-- set button onClick method to call function we defined passing input values as parameters -->
+        <button type="button" onclick="callDivisonRemainderAPI(document.getElementById('numerator').value,document.getElementById('denominator').value)">CALCULATE</button>
+    </form>
+</body>
+</html>
